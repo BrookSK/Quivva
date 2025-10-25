@@ -7,14 +7,42 @@
 
 ## Instalação
 1. Clone o repositório e entre na pasta do projeto
-2. Copie `config/config.php` e ajuste as credenciais de banco
-3. Crie o banco de dados e importe `database.sql`
-4. Instale o autoload do Composer:
+2. Copie `.env.example` para `.env` e ajuste as variáveis (dev/prod)
+3. Copie `config/config.php` se quiser personalizar mais algo (normalmente não precisa)
+4. Crie o banco de dados e importe `database.sql`
+5. Instale o autoload do Composer:
 ```bash
 composer install
 ```
-5. Aponte seu VirtualHost/Servidor para `public/` como DocumentRoot
-6. Acesse `http://localhost/` (ou a URL configurada)
+6. Aponte seu VirtualHost/Servidor para `public/` como DocumentRoot
+7. Acesse `http://localhost/` (ou a URL configurada)
+
+### Variáveis de ambiente (.env)
+Arquivo: `.env` (ignorado pelo git via `.gitignore`). Exemplo de conteúdo (baseado em `.env.example`):
+
+```
+APP_ENV=development
+QUIVVA_BASE_URL_DEV=/
+
+QUIVVA_DB_HOST_DEV=127.0.0.1
+QUIVVA_DB_PORT_DEV=3306
+QUIVVA_DB_NAME_DEV=quivva
+QUIVVA_DB_USER_DEV=root
+QUIVVA_DB_PASS_DEV=
+
+# Produção (definir no servidor)
+# APP_ENV=production
+# QUIVVA_BASE_URL_PROD=https://app.seudominio.com
+# QUIVVA_DB_HOST_PROD=...
+# QUIVVA_DB_PORT_PROD=3306
+# QUIVVA_DB_NAME_PROD=...
+# QUIVVA_DB_USER_PROD=...
+# QUIVVA_DB_PASS_PROD=...
+
+QUIVVA_CSRF_KEY=change_this_csrf_key
+```
+
+O carregamento do `.env` ocorre em `public/index.php` via `App\core\Env::load()`.
 
 ## Login inicial
 - Email: `admin@acme.test`

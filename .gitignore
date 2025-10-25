@@ -1,0 +1,7 @@
+/vendor/
+/.env
+/storage/logs/*
+!/storage/logs/.gitkeep
+/storage/uploads/*
+!/storage/uploads/.gitkeep
+/public/tools/set_admin_password.php
