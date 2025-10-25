@@ -1,0 +1,3 @@
+body { background-color: #f8f9fa; }
+.chat-box { height: 360px; overflow-y: auto; background: #fff; }
+.handle { cursor: move; }
