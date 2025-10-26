@@ -13,19 +13,29 @@ class App
         if ($uri === '') { $uri = 'dashboard/index'; }
 
         $segments = explode('/', $uri);
-        $controllerName = ucfirst($segments[0]) . 'Controller';
+        $base = $segments[0];
+        // Normalize controller segment
+        $map = [
+            'leads' => 'LeadController',
+            'pipelines' => 'PipelineController',
+            'flows' => 'FlowController',
+            'whatsapp' => 'WhatsAppController',
+        ];
+        if (isset($map[$base])) {
+            $controllerName = $map[$base];
+        } else {
+            // simple plural to singular (strip trailing 's') fallback
+            $normalized = rtrim($base, '/');
+            if (str_ends_with($normalized, 's')) {
+                $normalized = substr($normalized, 0, -1);
+            }
+            $controllerName = ucfirst($normalized) . 'Controller';
+        }
         $method = $segments[1] ?? 'index';
         $params = array_slice($segments, 2);
 
         $controllerClass = 'App\\controllers\\' . $controllerName;
-        $file = __DIR__ . '/../controllers/' . $controllerName . '.php';
-        if (!file_exists($file)) {
-            http_response_code(404);
-            echo 'Controller not found';
-            return;
-        }
-        require_once $file;
-
+        // Let autoloader resolve the class; avoid manual require to prevent open_basedir issues
         if (!class_exists($controllerClass)) {
             http_response_code(500);
             echo 'Controller class missing';
