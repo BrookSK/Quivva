@@ -20,8 +20,8 @@ $csrf = Auth::csrfToken();
         <input type="password" name="password" class="form-control" required>
       </div>
       <div class="mb-3">
-        <label class="form-label">Empresa (ID)</label>
-        <input type="number" name="company_id" class="form-control" value="1" required>
+        <label class="form-label">Nome da empresa</label>
+        <input type="text" name="company_name" class="form-control" placeholder="Ex: Minha Empresa LTDA" required>
       </div>
       <div class="d-flex gap-2">
         <button class="btn btn-primary" type="submit">Registrar</button>

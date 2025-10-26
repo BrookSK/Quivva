@@ -4,6 +4,7 @@ namespace App\controllers;
 use App\core\Auth;
 use App\core\Controller;
 use App\models\User;
+use App\models\Company;
 
 class AuthController extends Controller
 {
@@ -36,18 +37,25 @@ class AuthController extends Controller
             $name = trim($_POST['name'] ?? '');
             $email = trim($_POST['email'] ?? '');
             $password = $_POST['password'] ?? '';
-            $company_id = (int)($_POST['company_id'] ?? 1);
+            $company_name = trim($_POST['company_name'] ?? '');
             if ($name && $email && $password) {
                 $userModel = new User();
                 if ($userModel->findByEmail($email)) {
                     Auth::flash('error', 'E-mail já cadastrado.');
                 } else {
+                    // Create company if provided, else default name
+                    $companyModel = new Company();
+                    $companyId = $companyModel->create([
+                        'name' => $company_name ?: ($name . ' LTDA'),
+                        'plan' => 'free',
+                    ]);
                     $id = $userModel->create([
-                        'company_id' => $company_id,
+                        'company_id' => $companyId,
                         'name' => $name,
                         'email' => $email,
                         'password_hash' => password_hash($password, PASSWORD_BCRYPT),
-                        'role' => 'user'
+                        // first user is admin by default
+                        'role' => 'admin'
                     ]);
                     Auth::flash('success', 'Registro criado. Faça login.');
                     $this->redirect('auth/login');

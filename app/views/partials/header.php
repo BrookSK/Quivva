@@ -20,17 +20,26 @@ $base = rtrim($config['base_url'] ?? '/', '/');
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav me-auto">
-        <li class="nav-item"><a class="nav-link" href="<?= $base ?>/leads/index">Leads</a></li>
-        <li class="nav-item"><a class="nav-link" href="<?= $base ?>/pipelines/index">Pipelines</a></li>
-        <li class="nav-item"><a class="nav-link" href="<?= $base ?>/whatsapp/connect">WhatsApp</a></li>
-        <li class="nav-item"><a class="nav-link" href="<?= $base ?>/flows/index">Fluxos</a></li>
+        <?php if (!Auth::check()): ?>
+          <li class="nav-item"><a class="nav-link" href="<?= $base ?>/site/home">Início</a></li>
+          <li class="nav-item"><a class="nav-link" href="<?= $base ?>/site/plans">Planos</a></li>
+          <li class="nav-item"><a class="nav-link" href="<?= $base ?>/site/contact">Contato</a></li>
+        <?php else: $u = Auth::user(); $role = $u['role'] ?? 'user'; ?>
+          <li class="nav-item"><a class="nav-link" href="<?= $base ?>/leads/index">Leads</a></li>
+          <?php if ($role === 'admin'): ?>
+            <li class="nav-item"><a class="nav-link" href="<?= $base ?>/pipelines/index">Pipelines</a></li>
+            <li class="nav-item"><a class="nav-link" href="<?= $base ?>/whatsapp/connect">WhatsApp</a></li>
+            <li class="nav-item"><a class="nav-link" href="<?= $base ?>/flows/index">Fluxos</a></li>
+          <?php endif; ?>
+        <?php endif; ?>
       </ul>
       <ul class="navbar-nav">
         <?php if (Auth::check()): $u = Auth::user(); ?>
-        <li class="nav-item"><span class="navbar-text me-3">Olá, <?= htmlspecialchars($u['name'] ?? 'Usuário') ?></span></li>
-        <li class="nav-item"><a class="btn btn-outline-light btn-sm" href="<?= $base ?>/auth/logout">Sair</a></li>
+          <li class="nav-item"><span class="navbar-text me-3">Olá, <?= htmlspecialchars($u['name'] ?? 'Usuário') ?></span></li>
+          <li class="nav-item"><a class="btn btn-outline-light btn-sm" href="<?= $base ?>/auth/logout">Sair</a></li>
         <?php else: ?>
-        <li class="nav-item"><a class="btn btn-outline-light btn-sm" href="<?= $base ?>/auth/login">Entrar</a></li>
+          <li class="nav-item"><a class="btn btn-outline-light btn-sm me-2" href="<?= $base ?>/auth/login">Entrar</a></li>
+          <li class="nav-item"><a class="btn btn-primary btn-sm" href="<?= $base ?>/auth/register">Criar conta</a></li>
         <?php endif; ?>
       </ul>
     </div>
