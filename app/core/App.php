@@ -20,6 +20,12 @@ class App
             'pipelines' => 'PipelineController',
             'flows' => 'FlowController',
             'whatsapp' => 'WhatsAppController',
+            'migrations' => 'MigrationsController',
+            'auth' => 'AuthController',
+            'dashboard' => 'DashboardController',
+            'site' => 'SiteController',
+            'chat' => 'ChatController',
+            'tools' => 'ToolsController',
         ];
         if (isset($map[$base])) {
             $controllerName = $map[$base];
