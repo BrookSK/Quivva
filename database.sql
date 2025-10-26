@@ -62,7 +62,7 @@ CREATE TABLE IF NOT EXISTS automations (
 -- Seed data
 INSERT INTO companies (name, plan) VALUES ('Acme Ltd', 'free');
 INSERT INTO users (company_id, name, email, password_hash, role)
-VALUES (1, 'Admin', 'admin@acme.test', '$2y$10$abcdefghijklmnopqrstuvCwO7q5i7RzHh0YF9Qn1x5x7rGxX7P1e9e', 'admin');
+VALUES (1, 'Admin', 'admin@acme.test', '$2y$10$E.NuAgqcKDW0R/fKF4EFa.M1.ORDU9ZngOSQA6vO99BHBPqULan.m', 'admin');
 INSERT INTO pipelines (company_id, name, position) VALUES (1, 'Padrão', 1);
 INSERT INTO leads (company_id, user_id, name, phone, email, stage, source)
 VALUES (1, 1, 'João da Silva', '+55 11 90000-0000', 'joao@example.com', 'Novo', 'Site');
